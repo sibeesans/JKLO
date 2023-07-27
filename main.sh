@@ -52,8 +52,8 @@ TIME=$(date +'%Y-%m-%d %H:%M:%S')
 RAMMS=$(free -m | awk 'NR==2 {print $2}')
 KEY="6006599143:AAEgstCAioq35JgX97HaW_G3TAkLKzLZS_w"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
-REPO="https://raw.githubusercontent.com/jsjsjsjsjsjsjsjsjsjsjsjs/mekmek/main/"
-CDNF="https://raw.githubusercontent.com/jsjsjsjsjsjsjsjsjsjsjsjs/mekmek/main/"
+REPO="https://raw.githubusercontent.com/JKLOONLINE/JKLO/main/"
+CDNF="https://raw.githubusercontent.com/JKLOONLINE/JKLO/main/"
 APT="apt-get -y install "
 domain=$(cat /root/domain)
 start=$(date +%s)
@@ -539,9 +539,9 @@ function finish(){
     echo "    │   - Dropbear Websocket      : 443, 109              │"
     echo "    │   - SSH Websocket SSL       : 443                   │"
     echo "    │   - SSH Websocket           : 80                    │"
-    echo "    │   - OpenVPN SSL             : 1194                   │"
+    echo "    │   - OpenVPN SSL             : 443                  │"
     echo "    │   - OpenVPN Websocket SSL   : 443                   │"
-    echo "    │   - OpenVPN TCP             : 1194             │"
+    echo "    │   - OpenVPN TCP             : 1194                  │"
     echo "    │   - OpenVPN UDP             : 2200                  │"
     echo "    │   - Nginx Webserver         : 443, 80, 81           │"
     echo "    │   - Haproxy Loadbalancer    : 443, 80               │"
