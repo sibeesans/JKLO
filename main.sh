@@ -15,7 +15,7 @@ green='\e[0;32m'
 ipsaya=$(wget -qO- ipinfo.io/ip)
 data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 date_list=$(date +"%Y-%m-%d" -d "$data_server")
-data_ip="https://raw.githubusercontent.com/jsjsjsjsjsjsjsjsjsjsjsjs/mekmek/main/izin"
+data_ip="https://raw.githubusercontent.com/Jengkolonline/izinn/main/ip"
 checking_sc() {
   useexp=$(wget -qO- $data_ip | grep $ipsaya | awk '{print $3}')
   if [[ $date_list < $useexp ]]; then
@@ -504,8 +504,8 @@ function install_all() {
 }
 
 function finish(){
-    USRSC=$(curl -sS https://raw.githubusercontent.com/jsjsjsjsjsjsjsjsjsjsjsjs/mekmek/main/izin | grep $MYIP | awk '{print $2}')
-    EXPSC=$(curl -sS https://raw.githubusercontent.com/jsjsjsjsjsjsjsjsjsjsjsjs/mekmek/main/izin | grep $MYIP | awk '{print $3}')
+    USRSC=$(curl -sS https://raw.githubusercontent.com/Jengkolonline/izinn/main/ip | grep $MYIP | awk '{print $2}')
+    EXPSC=$(curl -sS https://raw.githubusercontent.com/Jengkolonline/izinn/main/ip | grep $MYIP | awk '{print $3}')
     TIMEZONE=$(printf '%(%H:%M:%S)T')
     TEXT="
 <code>────────────────────</code>
