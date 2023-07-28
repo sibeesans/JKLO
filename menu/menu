@@ -50,26 +50,59 @@ DATEVPS=$(date +'%d/%m/%Y')
 TIMEZONE=$(printf '%(%H:%M:%S)T')
 SERONLINE=$(uptime -p | cut -d " " -f 2-10000)
 
-nginx=$( systemctl status nginx | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
-if [[ $nginx == "running" ]]; then
-    status_nginx="${GREEN}ON${NC}"
+ssh_service=$(/etc/init.d/ssh status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+dropbear_service=$(/etc/init.d/dropbear status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+haproxy_service=$(systemctl status haproxy | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)                               xray_service=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+nginx_service=$(systemctl status nginx | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+#Status | JENGKOLONLINE
+clear
+# STATUS SERVICE  SSH
+if [[ $ssh_service == "running" ]]; then
+   status_ssh="⭕"
 else
-    status_nginx="${RED}OFF${NC}"
+   status_ssh="${RED}❌${NC} "
 fi
 
-xray=$( systemctl status xray | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
-if [[ $xray == "running" ]]; then
-    status_xray="${GREEN}ON${NC}"
+# // SSH Websocket Proxy
+ssh_ws=$( systemctl status ws | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
+if [[ $ssh_ws == "running" ]]; then
+    status_ws_epro="${green}⭕${NC}"
 else
-    status_xray="${RED}OFF${NC}"
+    status_ws_epro="${RED}❌${NC} "
 fi
 
-haproxy=$( systemctl status haproxy | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
-if [[ $xray == "running" ]]; then
-    status_haproxy="${GREEN}ON${NC}"
+# STATUS SERVICE HAPROXY
+if [[ $haproxy_service == "running" ]]; then
+   status_haproxy="${green}⭕${NC}"
 else
-    status_haproxy="${RED}OFF${NC}"
+   status_haproxy="${RED}❌${NC} "
 fi
+
+# STATUS SERVICE XRAY
+if [[ $xray_service == "running" ]]; then
+   status_xray="${green}⭕${NC}"
+else
+   status_xray="${RED}❌${NC} "
+fi
+
+# STATUS SERVICE NGINX
+if [[ $nginx_service == "running" ]]; then
+   status_nginx="${green}⭕${NC}"
+else
+   status_nginx="${RED}❌${NC} "
+fi
+
+# STATUS SERVICE Dropbear
+if [[ $dropbear_service == "running" ]]; then
+   status_dropbear="${green}⭕${NC}"
+else
+   status_dropbear="${RED}❌${NC} "
+fi
+vm=$(cat /etc/vmess/.vmess.db | wc -l)
+vll=$(cat /etc/vless/.vless.db | wc -l)
+trr=$(cat /etc/trojan/.trojan.db | wc -l)
+ssk=$(cat /etc/shadowsocks/.shadowsocks.db | wc -l)
+sssh=$(cat /etc/ssh/.ssh.db | wc -l)
 
 ttoday="$(vnstat | grep today | awk '{print $8" "substr ($9, 1, 3)}' | head -1)"
 bmon="$(vnstat -m | grep `date +%G-%m` | awk '{print $8" "substr ($9, 1 ,3)}' | head -1)"
