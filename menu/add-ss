@@ -78,8 +78,9 @@ echo $cipher:$uuid >/tmp/log
 shadowsocks_base64=$(cat /tmp/log)
 echo -n "${shadowsocks_base64}" | base64 >/tmp/log1
 shadowsocks_base64e=$(cat /tmp/log1)
-shadowsockslink="ss://${shadowsocks_base64e}@${domain}:443?path=/ss-ws&security=tls&encryption=none&type=ws#${user}"
-shadowsockslink1="ss://${shadowsocks_base64e}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=ss-grpc&sni=bug.com#${user}"
+shadowsockslink="ss://${shadowsocks_base64e}@${domain}:$443?path=/ss-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
+shadowsockslink1="ss://${shadowsocks_base64e}@${domain}:$80?path=/ss-ws&security=none&host=${domain}&type=ws#${user}"
+shadowsockslink2="ss://${shadowsocks_base64e}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=ss-grpc&sni=bug.com#${user}"
 systemctl reload xray
 rm -rf /tmp/log
 rm -rf /tmp/log1
@@ -309,7 +310,9 @@ _______________________________
 _______________________________
  Link Shadowsocks Account
 _______________________________
-Link TLS : ss://${shadowsocks_base64e}@${domain}:443?path=/ss-ws&security=tls&encryption=none&type=ws#${user}"
+Link TLS : ss://${shadowsocks_base64e}@${domain}:$443?path=/ss-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
+_______________________________
+Link NTLS : ss://${shadowsocks_base64e}@${domain}:$80?path=/ss-ws&security=none&host=${domain}&type=ws#${user}"
 _______________________________
 Link gRPC : ss://${shadowsocks_base64e}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=ss-grpc&sni=bug.com#${user}"
 _______________________________
@@ -317,8 +320,9 @@ _______________________________
 
 
 END
-shadowsockslink="ss://${shadowsocks_base64e}@${domain}:443?path=/ss-ws&security=tls&encryption=none&type=ws#${user}"
-shadowsockslink1="ss://${shadowsocks_base64e}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=ss-grpc&sni=bug.com#${user}"
+shadowsockslink="ss://${shadowsocks_base64e}@${domain}:$443?path=/ss-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
+shadowsockslink1="ss://${shadowsocks_base64e}@${domain}:$80?path=/ss-ws&security=none&host=${domain}&type=ws#${user}"
+shadowsockslink2="ss://${shadowsocks_base64e}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=ss-grpc&sni=bug.com#${user}"
 
 TEXT="
 <code>•────•──────•──────•─────•</code>
@@ -329,6 +333,7 @@ TEXT="
 <code>Location          : $CITY</code>
 <code>User Quota        : ${Quota} GB</code>
 <code>Port TLS          : 443</code>
+<code>Port NTLS         : 80, 8080, 8880</code>
 <code>Port GRPC         : 443</code>
 <code>Cipers            : aes-128-gcm</code>
 <code>User ID           : ${uuid}</code>
@@ -341,11 +346,15 @@ TEXT="
 <code>•────•──────•──────•─────•</code>
 <code>          Link TLS       </code>
 <code>•────•──────•──────•─────•</code> 
-<code>ss://${shadowsocks_base64e}@${domain}:443?path=/ss-ws&security=tls&encryption=none&type=ws#${user}</code>
+<code>$ss://${shadowsocks_base64e}@${domain}:$443?path=/ss-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}</code>
 <code>•────•──────•──────•─────•</code>
 <code>          Link NTLS      </code> 
 <code>•────•──────•──────•─────•</code>
-<code>$ss://${shadowsocks_base64e}@${domain}:443?path=/ss-ws&security=tls&encryption=none&type=ws#${user}</code>
+<code>$ss://${shadowsocks_base64e}@${domain}:$80?path=/ss-ws&security=none&host=${domain}&type=ws#${user}</code>
+<code>•────•──────•──────•─────•</code>
+<code>          Link Grpc      </code> 
+<code>•────•──────•──────•─────•</code>
+<code>$ss://${shadowsocks_base64e}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=ss-grpc&sni=bug.com#${user}</code>
 <code>•────•──────•──────•─────•</code>
 <code>       Format OpenClash  </code>
 <code>•────•──────•──────•─────•</code>
@@ -385,16 +394,21 @@ clear
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e " \e[1;97;101m           SUCCES CREAT SHADOWSOCKS ACCOUNT          \e[0m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Remarks        : ${user}"
-echo -e "Domain         : ${domain}"
-echo -e "Location       : $CITY"
-echo -e "User Quota     : ${Quota} GB"
-echo -e "User ID        : ${uuid}"
-echo -e "Port TLS       : 443"
-echo -e "Port  GRPC     : 443"
-echo -e "Cipers         : aes-128-gcm"
-echo -e "Network        : ws or grpc"
-echo -e "Path           : /ss-ws or /ss-grpc"
+<code>Remarks           : ${user}"
+<code>Domain            : ${domain}"
+<code>Location          : $CITY"
+<code>User Quota        : ${Quota} GB"
+<code>Port TLS          : 443"
+<code>Port NTLS         : 80, 8080, 8880"
+<code>Port GRPC         : 443"
+<code>Cipers            : aes-128-gcm"
+<code>User ID           : ${uuid}"
+<code>AlterId           : 0"
+<code>Security          : auto"
+<code>Network           : WS/gRPC"
+<code>Path WS           : /ss-ws"
+<code>Path GRPC         : /ss-grpc"
+<code>ServiceName       : shadowsocks-grpc"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "                  Link TLS       "
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
