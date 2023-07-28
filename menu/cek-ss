@@ -28,10 +28,11 @@ checking_sc
 clear
 echo -n >/tmp/other.txt
 data=($(cat /etc/xray/config.json | grep '^#ss#' | cut -d ' ' -f 2 | sort | uniq))
-    echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-  echo -e " \e[1;97;101m          CEK SHADOWSOCKS ACCOUNT       \e[0m"
-  echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-
+echo -e " \033[31m##########\033[33m##########\033[32m##########\033[34m##########\033[35m##########\033[36m##########\e[0m"
+echo -e " \033[31m╭══════════════════════════════════════════════════════════╮\e[0m"
+echo -e " \033[34m│$NC\033[33m                Chek User Login Shadowsoks                $NC\033[34m│\e[0m"
+echo -e " \033[33m╰══════════════════════════════════════════════════════════╯\e[0m"
+echo -e " \033[32m╭══════════════════════════════════════════════════════════╮\e[0m"
 for akun in "${data[@]}"; do
     if [[ -z "$akun" ]]; then
         akun="tidakada"
@@ -58,12 +59,13 @@ for akun in "${data[@]}"; do
         jum2=$(cat /tmp/ipshadowsocks.txt | nl)
         echo "user : $akun"
         echo "$jum2"
-        echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e " \033[33m╰══════════════════════════════════════════════════════════╯\e[0m"
     fi
     rm -rf /tmp/ipshadowsocks.txt
 done
 
 rm -rf /tmp/other.txt
+echo -e " \033[31m##########\033[33m##########\033[32m##########\033[34m##########\033[35m##########\033[36m##########\e[0m"
 echo ""
 read -n 1 -s -r -p "Press [ Enter ] to back on menu"
 shadowsocks
