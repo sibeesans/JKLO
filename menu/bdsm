@@ -25,7 +25,7 @@ tim2sec() {
 }
 function vmess(){
 echo -n > /tmp/iplim
-data=($(cat /etc/vmess/.vmess.db | grep '^###' | cut -d ' ' -f 2 | sort | uniq))
+data=($(cat /etc/vmess/.vmess.db | grep '^#vm#' | cut -d ' ' -f 2 | sort | uniq))
 for db in ${data[@]}; do
     logFile=$(cat /var/log/xray/access.log | grep -w "email: ${db}" | tail -n 150)
     while read a; do
@@ -54,11 +54,11 @@ if [[ ${split} != "" ]]; then
         if [ -e /etc/vmess/limit-ip/${user} ]; then
         cem=$(cat /etc/vmess/limit-ip/${user} )
         if [[ ${result} -gt ${cem} ]]; then
-         uuid=$(grep -wE "^### $user" "/etc/vmess/.vmess.db" | cut -d ' ' -f 4 | sort | uniq)
-         exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+         uuid=$(grep -wE "^#vm# $user" "/etc/vmess/.vmess.db" | cut -d ' ' -f 4 | sort | uniq)
+         exp=$(grep -wE "^#vm# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
          #locked akun 15 menit
          echo "resvm ${user} ${exp} ${uuid}" | at now +15 minutes &> /dev/null
-	     sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+	     sed -i "/^#vm# $user $exp/,/^},{/d" /etc/xray/config.json
 	     systemctl restart xray &> /dev/null
          cum=$(cat /tmp/iplim | grep -w "${user}" | cut -d ' ' -f 2,3)
          
@@ -90,7 +90,7 @@ echo "" >/dev/null
 }
 function vless(){
 echo -n > /tmp/iplimless
-data=($(cat /etc/vless/.vless.db | grep '^#&' | cut -d ' ' -f 2 | sort | uniq))
+data=($(cat /etc/vless/.vless.db | grep '^#vl#' | cut -d ' ' -f 2 | sort | uniq))
 for db in ${data[@]}; do
     logFile=$(cat /var/log/xray/access.log | grep -w "email: ${db}" | tail -n 150)
     while read a; do
@@ -119,11 +119,11 @@ if [[ ${split} != "" ]]; then
         if [ -e /etc/vless/limit-ip/${user} ]; then
         cem=$(cat /etc/vless/limit-ip/${user} )
         if [[ ${result} -gt ${cem} ]]; then
-         uuid=$(grep -wE "^#& $user" "/etc/vless/.vless.db" | cut -d ' ' -f 4 | sort | uniq)
-         exp=$(grep -wE "^#& $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+         uuid=$(grep -wE "^#vl# $user" "/etc/vless/.vless.db" | cut -d ' ' -f 4 | sort | uniq)
+         exp=$(grep -wE "^#vl# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
          #locked akun 15 menit
          echo "resvless ${user} ${exp} ${uuid}" | at now +15 minutes &> /dev/null
-	     sed -i "/^#& $user $exp/,/^},{/d" /etc/xray/config.json
+	     sed -i "/^#vl# $user $exp/,/^},{/d" /etc/xray/config.json
 	     systemctl restart xray &> /dev/null
          cum=$(cat /tmp/iplimless | grep -w "${user}" | cut -d ' ' -f 2,3)
          
@@ -155,7 +155,7 @@ echo "" >/dev/null
 }
 function trojan(){
 echo -n > /tmp/iplimtr
-data=($(cat /etc/trojan/.trojan.db | grep '^#!' | cut -d ' ' -f 2 | sort | uniq))
+data=($(cat /etc/trojan/.trojan.db | grep '^#tr#' | cut -d ' ' -f 2 | sort | uniq))
 for db in ${data[@]}; do
     logFile=$(cat /var/log/xray/access.log | grep -w "email: ${db}" | tail -n 150)
     while read a; do
@@ -184,11 +184,11 @@ if [[ ${split} != "" ]]; then
         if [ -e /etc/trojan/limit-ip/${user} ]; then
         cem=$(cat /etc/trojan/limit-ip/${user} )
         if [[ ${result} -gt ${cem} ]]; then
-         uuid=$(grep -wE "^#! $user" "/etc/trojan/.trojan.db" | cut -d ' ' -f 4 | sort | uniq)
-         exp=$(grep -wE "^#! $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+         uuid=$(grep -wE "^#tr# $user" "/etc/trojan/.trojan.db" | cut -d ' ' -f 4 | sort | uniq)
+         exp=$(grep -wE "^#tr# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
          #locked akun 15 menit
          echo "restr ${user} ${exp} ${uuid}" | at now +15 minutes &> /dev/null
-	     sed -i "/^#! $user $exp/,/^},{/d" /etc/xray/config.json
+	     sed -i "/^#tr# $user $exp/,/^},{/d" /etc/xray/config.json
 	     systemctl restart xray &> /dev/null
          cum=$(cat /tmp/iplimtr | grep -w "${user}" | cut -d ' ' -f 2,3)
          
