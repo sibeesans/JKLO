@@ -58,7 +58,14 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
     vmess
   fi
 done
-
+read -p "Bug Address (Example: www.google.com) : " address
+bug_addr=${address}.
+bug_addr2=${address}
+if [[ $address == "" ]]; then
+sts=$bug_addr2
+else
+sts=$bug_addr
+fi
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (days): " masaaktif
 read -p "Limit User (GB): " Quota
@@ -346,7 +353,7 @@ rules:
 
 - name: geostore-Vmess-$user-WS (CDN)
   type: vmess
-  server: ${domain}
+  server: ${sts}
   port: 443
   uuid: ${uuid}
   alterId: 0
@@ -366,7 +373,7 @@ _______________________________________________________
 
 - name: geostore-$user-WS (CDN) Non TLS
   type: vmess
-  server: ${domain}
+  server: ${sts}
   port: 80
   uuid: ${uuid}
   alterId: 0
