@@ -94,18 +94,20 @@ ns_domain_cloudflare() {
 }
 
 clear
-echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\033[0;33m   │\033[0m            \033[0;32mCHANGE DOMAIN VPS\033[0m             \033[0;33m|\033[0m"
-echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "     ${RED}Autoscript xray vpn lite (multi port)${NC}"
-echo -e "${RED}Make sure the internet is smooth when installing the script${NC}"
-echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e " \033[31m##########\033[33m##########\033[32m##########\033[34m##########\033[35m##########\033[36m##########\e[0m"
+echo -e " \033[31m╭══════════════════════════════════════════════════════════╮\e[0m"
+echo -e " \033[34m│$NC\033[33m                      CHANGE DOMAIN                       $NC\033[34m│\e[0m"
+echo -e " \033[33m╰══════════════════════════════════════════════════════════╯\e[0m"
+echo -e "    ${RED}Autoscript xray vpn lite (multi port)${NC}"
+echo -e "    ${RED}Make sure the internet is smooth when installing the script${NC}"
+echo -e " \033[32m╭══════════════════════════════════════════════════════════╮\e[0m"
 echo -e ""
 echo -e "       ${GREEN}Hostname${NC}    :  $LAST_DOMAIN"
 echo -e "       ${GREEN}Public IP${NC}   :  $MYIP"
 echo -e "       ${GREEN}Total RAM${NC}   :  $totalram MB"
 echo -e ""
-echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e " \033[32m╰══════════════════════════════════════════════════════════╯\e[0m"
+echo -e " \033[31m##########\033[33m##########\033[32m##########\033[34m##########\033[35m##########\033[36m##########\e[0m"
 read -rp "Input ur Domain/Host : " -e domain
 rm -rf /etc/xray/domain
 echo $domain >/etc/xray/domain
