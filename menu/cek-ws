@@ -28,43 +28,47 @@ checking_sc
 clear
 echo -n >/tmp/other.txt
 data=($(cat /etc/xray/config.json | grep '^#vm#' | cut -d ' ' -f 2 | sort | uniq))
-
-    echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e " \e[1;97;101m           CEK VMESS ACCOUNT            \e[0m"
-    echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-
-for akun in "${data[@]}"; do
-    if [[ -z "$akun" ]]; then
-        akun="tidakada"
-    fi
-
-    echo -n >/tmp/ipvmess.txt
-    data2=($(cat /var/log/xray/access.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq))
-    for ip in "${data2[@]}"; do
-
-        jum=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -w "$ip" | sort | uniq)
-        if [[ "$jum" = "$ip" ]]; then
-            echo "$jum" >>/tmp/ipvmess.txt
-        else
-            echo "$ip" >>/tmp/other.txt
-        fi
-        jum2=$(cat /tmp/ipvmess.txt)
-        sed -i "/$jum2/d" /tmp/other.txt >/dev/null 2>&1
-    done
-
-    jum=$(cat /tmp/ipvmess.txt)
-    if [[ -z "$jum" ]]; then
-        echo >/dev/null
-    else
-        jum2=$(cat /tmp/ipvmess.txt | nl)
-        echo "user : $akun"
-        echo "$jum2"
-        echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    fi
-    rm -rf /tmp/ipvmess.txt
+echo -e " \033[31m##########\033[33m##########\033[32m##########\033[34m##########\033[35m##########\033[36m##########\e[0m"
+echo -e " \033[31m╭══════════════════════════════════════════════════════════╮\e[0m"
+echo -e " \033[34m│$NC\033[33m                  Chek User Login Vmess                   $NC\033[34m│\e[0m"
+echo -e " \033[33m╰══════════════════════════════════════════════════════════╯\e[0m"
+echo -e " \033[32m╭══════════════════════════════════════════════════════════╮\e[0m"
+for akun in "${data[@]}"
+do
+if [[ -z "$akun" ]]; then
+akun="tidakada"
+fi
+echo -n > /tmp/ipvmess.txt
+data2=( `cat /var/log/xray/access.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
+for ip in "${data2[@]}"
+do
+jum=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sed s/127.0.0.1//g | grep -w "$ip" | sort | uniq)
+if [[ "$jum" = "$ip" ]]; then
+echo "$jum" >> /tmp/ipvmess.txt
+else
+echo "$ip" >> /tmp/other.txt
+fi
+jum2=$(cat /tmp/ipvmess.txt)
+sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
 done
-
+jum=$(cat /tmp/ipvmess.txt)
+if [[ -z "$jum" ]]; then
+echo > /dev/null
+else
+jum2=$(cat /tmp/ipvmess.txt | wc -w)
+#byte=$(cat /etc/vmess/${akun})
+lim=$(con ${byte})
+#wey=$(cat /etc/limit/vmess/${akun})
+gb=$(con ${wey})
+lastlogin=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
+printf "  %-13s %-7s %-8s %2s\n"   "${akun}" "$lastlogin"  " ${gb}/${lim}"   "  $jum2";
+fi 
+rm -rf /tmp/ipvmess.txt
+done
 rm -rf /tmp/other.txt
+echo ""
+echo -e " \033[32m╰══════════════════════════════════════════════════════════╯\e[0m"
+echo -e " \033[31m##########\033[33m##########\033[32m##########\033[34m##########\033[35m##########\033[36m##########\e[0m"
 echo ""
 read -n 1 -s -r -p "Press [ Enter ] to back on menu vmess"
 vmess
