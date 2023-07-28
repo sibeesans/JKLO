@@ -35,22 +35,23 @@ checking_sc() {
 checking_sc
 clear
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
-  echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-  echo -e " \e[1;97;101m            ADD TROJAN ACCOUNT            \e[0m"  
-  echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+  echo -e " \033[31m##########\033[33m##########\033[32m##########\033[34m##########\033[35m##########\033[36m##########\e[0m"
+  echo -e " \033[31m╭══════════════════════════════════════════════════════════╮\e[0m"
+  echo -e " \033[34m│$NC\033[33m                      Trojan ACCOUNT                      $NC\033[34m│\e[0m"
+  echo -e " \033[33m╰══════════════════════════════════════════════════════════╯\e[0m"
 
   read -rp "User: " -e user
   user_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
 
   if [[ ${user_EXISTS} == '1' ]]; then
     clear
-    echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-  echo -e " \e[1;97;101m            ADD TROJAN ACCOUNT            \e[0m"  
-  echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+    echo -e " \033[33m╭══════════════════════════════════════════════════════════╮\e[0m"
+    echo -e " \033[32m│$NC\033[33m                      Trojan ACCOUNT                      $NC\033[32m│\e[0m"
+    echo -e " \033[35m╰══════════════════════════════════════════════════════════╯\e[0m"
     echo ""
     echo "A client with the specified name was already created, please choose another name."
     echo ""
-    echo -e "\033[1;93m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+    echo -e " \033[31m##########\033[33m##########\033[32m##########\033[34m##########\033[35m##########\033[36m##########\e[0m"
     read -n 1 -s -r -p "Press [ enter ] to back on menu trojan"
     trojan
   fi
