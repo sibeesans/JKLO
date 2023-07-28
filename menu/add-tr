@@ -204,7 +204,9 @@ _______________________________
 _______________________________
 Link Trojan Account
 _______________________________
-Link WS : trojan://${uuid}@${domain}:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}
+Link TLS : trojan://${uuid}@${sts}:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}
+_______________________________
+Link NTLS : trojan://${uuid}@${sts}:80?path=%2Ftrojan-ws&security=none&host=${domain}&type=ws#${user}
 _______________________________
 Link GRPC : trojan://${uuid}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=${domain}#${user}
 _______________________________
@@ -212,19 +214,21 @@ _______________________________
 
 
 END
-trojanlink="trojan://${uuid}@${domain}:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
-trojanlink1="trojan://${uuid}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=${domain}#${user}"
+trojanlink="trojan://${uuid}@${sts}:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
+trojanlink1="trojan://${uuid}@${sts}:80?path=%2Ftrojan-ws&security=none&host=${domain}&type=ws#${user}"
+trojanlink2="trojan://${uuid}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=${domain}#${user}"
 TEXT="
 <code>──────────────────────────</code>
-<code>    SUCCES CREAT TRIALL TROJAN</code>
+<code>    SUCCES CREAT TROJAN</code>
 <code>──────────────────────────</code>
 <code>Remarks      : ${user}</code>
 <code>Domain       : ${domain}</code>
 <code>Location     : $CITY</code>
 <code>User Quota   : ${Quota} GB</code>
 <code>Port DNS     : 443,53</code>
-<code>Port WS(TLS)     : 443</code>
-<code>Port GRPC     : 443</code>
+<code>Port TLS     : 443</code>
+<code>Port NTLS    : 80,8080,8880</code>
+<code>Port GRPC    : 443</code>
 <code>User ID      : ${uuid}</code>
 <code>AlterId      : 0</code>
 <code>Security     : auto</code>
@@ -236,6 +240,9 @@ TEXT="
 <code>───────────────────────────</code>
 <code>Link NTLS    :</code> 
 <code>${trojanlink1}</code>
+<code>───────────────────────────</code>
+<code>Link Grpc    :</code> 
+<code>${trojanlink2}</code>
 <code>───────────────────────────</code>
 <code>Format OpenClash :</code> 
 https://${domain}:81/trojan-$user.txt
@@ -276,7 +283,8 @@ echo -e "Remarks        : ${user}"
 echo -e "Host           : ${domain}"
 echo -e "Location       : $CITY"
 echo -e "User Quota     : ${Quota} GB"
-echo -e "Port WS(TLS)   : 443"
+echo -e "Port TLS       : 443"
+echo -e "Port NTLS      : 80,8080,8880"
 echo -e "Port  gRPC     : 443"
 echo -e "User ID        : ${uuid}"
 echo -e "AlterID        : 0"
@@ -284,9 +292,11 @@ echo -e "Security       : auto"
 echo -e "Path           : /trojan"
 echo -e "Network        : WS(TLS) or gRPC"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link WS   : ${trojanlink}"
+echo -e "Link TLS  : ${trojanlink}"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link GRPC : ${trojanlink1}"
+echo -e "Link NTLS : ${trojanlink1}"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link NTLS : ${trojanlink2}"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Format OpenClash : https://${domain}:81/trojan-$user.txt"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
