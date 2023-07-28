@@ -56,6 +56,22 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
     trojan
   fi
 done
+read -p "Bug Address (Example: www.google.com) : " address
+read -p "Bug SNI/Host (Example : m.facebook.com) : " hst
+bug_addr=${address}.
+bug_addr2=${address}
+if [[ $address == "" ]]; then
+sts=$bug_addr2
+else
+sts=$bug_addr
+fi
+bug=${hst}
+bug2=bug.com
+if [[ $hst == "" ]]; then
+sni=$bug2
+else
+sni=$bug
+fi
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (days): " masaaktif
 read -p "Limit User (GB): " Quota
@@ -76,13 +92,71 @@ cat >/var/www/html/trojan-$user.txt <<-END
 =============================
           P R O J E C T
 =============================
-Owner: t.me/myridwan 
+Owner: t.me/Jengkol_Online 
 =============================
- Format Trojan GO/WS (CDN)
+Format OpenClash
+=============================
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7895
+ipv6: false
+mode: rule
+log-level: silent
+allow-lan: true
+external-controller: 0.0.0.0:9090
+secret: ""
+bind-address: "*"
+unified-delay: true
+profile:
+  store-selected: true
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: redir-host
+  listen: 0.0.0.0:7874
+  nameserver:
+    - 8.8.8.8
+    - 1.0.0.1
+    - https://dns.google/dns-query
+  fallback:
+    - 1.1.1.1
+    - 8.8.4.4
+    - https://cloudflare-dns.com/dns-query
+    - 112.215.203.254
+  default-nameserver:
+    - 8.8.8.8
+    - 1.1.1.1
+    - 112.215.203.254
+proxies:
+  - name: ${user}
+    server: ${sts}
+    port: 443
+    type: trojan
+    password: ${uuid}
+    skip-cert-verify: true
+    sni: ${domain}
+    network: ws
+    ws-opts:
+      path: /trojan-ws
+      headers:
+        Host: ${domain}
+    udp: true
+proxy-groups:
+  - name: FASTSSH-SSHKIT-HOWDY
+    type: select
+    proxies:
+      - ${user}
+      - DIRECT
+rules:
+  - MATCH,FASTSSH-SSHKIT-HOWDY
+=============================
+Format Trojan TLS (CDN)
 =============================
 
-- name: Trojan-$user-GO/WS (CDN)
-  server: ${domain}
+- name: Trojan-$user
+  server: ${sts}
   port: 443
   type: trojan
   password: ${uuid}
@@ -91,24 +165,41 @@ Owner: t.me/myridwan
   skip-cert-verify: true
   udp: true
   ws-opts:
-    path: /trojan-ws
-    headers:
-        Host: ${domain}
+   path: /trojan
+   headers:
+    Host: ${domain}
+==============================
+ Format Trojan NTLS (CDN)
+==============================
+- name: Trojan-$user
+  type: trojan
+  server: ${sts}
+  port: 80
+  uuid: ${uuid}
+  cipher: auto
+  udp: true
+  tls: false
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+   path: /trojan
+   headers:
+    Host: ${domain}
 _______________________________
   Format Trojan gRPC
 _______________________________
 
-- name: Trojan-$user-gRPC (SNI)
-  type: trojan
-  server: ${domain}
+- name: Trojan-$user
+  server: ${sts}
   port: 443
-  password: ${uuid}
-  udp: true
-  sni: ${domain}
-  skip-cert-verify: true
+  type: trojan
+  password: $uuid
   network: grpc
-  grpc-opts:
-    grpc-service-name: trojan-grpc
+  sni: $domain
+  skip-cert-verify: true
+  udp: true
+   grpc-opts:
+    grpc-service-name: "trojan-grpc"
 
 _______________________________
 Link Trojan Account
