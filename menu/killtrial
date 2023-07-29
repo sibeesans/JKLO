@@ -37,6 +37,16 @@ function trojan(){
 	rm -f /etc/trojan/limit/$user
 	rm -f /var/www/html/trojan-$user.txt
 }
+function trojan(){
+    exp=$(grep -wE "^#ss# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+	sed -i "/^#ss# $user $exp/,/^},{/d" /etc/shadowsocks/.shadowsocks.db
+	sed -i "/^#ss# $user $exp/,/^},{/d" /etc/xray/config.json
+	sed -i "/^#ss# $user $exp/,/^},{/d" /etc/xray/config.json
+	rm -f /etc/shadowsocks/quota-asli/$user
+	rm -f /etc/shadowsocks/quota-hasil/$user
+	rm -f /etc/shadowsocks/limit/$user
+	rm -f /var/www/html/shadowsocks-$user.txt
+}
 if [[ ${1} == "vmess" ]]; then
 vmess
 elif [[ ${1} == "vless" ]]; then
@@ -45,4 +55,6 @@ elif [[ ${1} == "trojan" ]]; then
 trojan
 elif [[ ${1} == "ssh" ]]; then
 ssh
+elif [[ ${1} == "ssws" ]]; then
+ssws
 fi
