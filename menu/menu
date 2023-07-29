@@ -51,8 +51,8 @@ TIMEZONE=$(printf '%(%H:%M:%S)T')
 SERONLINE=$(uptime -p | cut -d " " -f 2-10000)
 
 ssh_service=$(/etc/init.d/ssh status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-dropbear_service=$(/etc/init.d/dropbear status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-haproxy_service=$(systemctl status haproxy | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)                               xray_service=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+haproxy_service=$(systemctl status haproxy | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)                              
+xray_service=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 nginx_service=$(systemctl status nginx | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #Status | JENGKOLONLINE
 clear
@@ -61,14 +61,6 @@ if [[ $ssh_service == "running" ]]; then
    status_ssh="⭕"
 else
    status_ssh="${RED}❌${NC} "
-fi
-
-# // SSH Websocket Proxy
-ssh_ws=$( systemctl status ws | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
-if [[ $ssh_ws == "running" ]]; then
-    status_ws_epro="${green}⭕${NC}"
-else
-    status_ws_epro="${RED}❌${NC} "
 fi
 
 # STATUS SERVICE HAPROXY
@@ -92,12 +84,6 @@ else
    status_nginx="${RED}❌${NC} "
 fi
 
-# STATUS SERVICE Dropbear
-if [[ $dropbear_service == "running" ]]; then
-   status_dropbear="${green}⭕${NC}"
-else
-   status_dropbear="${RED}❌${NC} "
-fi
 vm=$(cat /etc/vmess/.vmess.db | wc -l)
 vll=$(cat /etc/vless/.vless.db | wc -l)
 trr=$(cat /etc/trojan/.trojan.db | wc -l)
@@ -121,7 +107,7 @@ echo -e " \033[31m##########\033[33m##########\033[32m##########\033[34m########
 echo -e " \033[31m╭══════════════════════════════════════════════════════════╮\e[0m"
 echo -e " \033[34m│$NC\033[33m                       JENGKOLONLINE                      $NC\033[34m│\e[0m"
 echo -e " \033[33m╰══════════════════════════════════════════════════════════╯\e[0m"
-echo -e "  SSH : $status_ssh   NGINX : $status_nginx   XRAY : $status_xray   HAPROXY : $status_haproxy   WS-EPRO : $status_ws_epro   DROPBEAR : $status_dropbear         $NC"
+echo -e "  SSH : $status_ssh   NGINX : $status_nginx   XRAY : $status_xray   HAPROXY : $status_haproxy"
 echo -e " \033[32m╭══════════════════════════════════════════════════════════╮\e[0m"
 echo -e " \033[35m│$NC \033[31mSystem OS\e[0m     :   ${putih}$MODEL${NC}"
 echo -e " \033[35m│$NC \033[33mServer RAM\e[0m    :   ${putih}$RAM MB $NC"
@@ -131,25 +117,26 @@ echo -e " \033[35m│$NC \033[34mDate\e[0m          :   ${putih}$DATEVPS${NC}"
 echo -e " \033[35m│$NC \033[36mTime\e[0m          :   ${putih}$TIMEZONE${NC}"
 echo -e " \033[35m│$NC \033[33mDomain\e[0m        :   ${putih}$domain${NC}"
 echo -e " \033[35m│$NC \033[32mNS Domain\e[0m     :   ${putih}$NS${NC}"
-echo -e " \033[35m╰══════════════════════════════════════════════════════════╯\e[0m"
-echo -e "                                      SSH    = $sssh ${NC}"
-echo -e "                                      VMESS  = $sssh ${NC}"
-echo -e "                                      VLESS  = $sssh ${NC}"
-echo -e "                                      TROJAN = $sssh ${NC}"
-echo -e "                                      SS     = $sssh ${NC}"
-echo -e "                                      \033[31m═\033[32m═\033[33m═\033[34m═\033[35m═\033[36m═\033[32m═\033[34m═\033[31m═\033[33m═\033[35m═\033[36m═\033[33m═\033[31m═\e[0m"
+echo -e " \033[36m╰══════════════════════════════════════════════════════════╯\e[0m"
+echo -e "                          \033[32mSSH    = $sssh ${NC}"
+echo -e "                          \033[32mVMESS  = $sssh ${NC}"
+echo -e "                          \033[32mVLESS  = $sssh ${NC}"
+echo -e "                          \033[32mTROJAN = $sssh ${NC}"
+echo -e "                          \033[32mSS     = $sssh ${NC}"
+echo -e "                       \033[31m═\033[32m═\033[33m═\033[34m═\033[35m═\033[36m═\033[32m═\033[34m═\033[31m═\033[33m═\033[35m═\033[36m═\033[33m═\033[31m═\e[0m"
 echo -e " \033[35m╭══════════════════════════════════════════════════════════╮\e[0m"
-echo -e " \033[33m│$NC \033[35m[1]\e[0m ${YELL}MENU SSH&OVPN ${NC}"      \033[33m│$NC \033[35m[5]\e[0m ${YELL}MENU SHADOWSHOCK${NC}"
-echo -e " \033[33m│$NC \033[31m[2]\e[0m ${YELL}MENU VMESS${NC}"          \033[33m│$NC \033[31m[6]\e[0m ${YELL}MENU UTILITY${NC}"
-echo -e " \033[33m│$NC \033[34m[3]\e[0m ${YELL}MENU VLESS${NC}"          \033[33m│$NC \033[34m[7]\e[0m ${YELL}ADD NOTIF BOT${NC}"
-echo -e " \033[33m│$NC \033[36m[4]\e[0m ${YELL}MENU TROJAN${NC}"         \033[33m│$NC \033[36m[8]\e[0m ${YELL}ADD BOT PANEL${NC}"
-echo -e " \033[33m╰══════════════════════════════════════════════════════════╯\e[0m"
-echo -e " \033[35m╭══════════════════════════════════════════════════════════╮\e[0m"
+echo -e " \033[33m│$NC \033[32m[1]\e[0m ${YELL}MENU SSH&OVPN${NC} \033[32m[5]\e[0m ${YELL}MENU SHADOWSHOCK \033[32m[6]\e[0m ${YELL}MENU SYSTIEM${NC}"
+echo -e " \033[33m│$NC \033[31m[2]\e[0m ${YELL}MENU VMESS${NC}    \033[31m[6]\e[0m ${YELL}ADD L2TP         \033[31m[6]\e[0m ${YELL}ADD BOT NOTIF${NC}"
+echo -e " \033[33m│$NC \033[34m[3]\e[0m ${YELL}MENU VLESS${NC}    \033[34m[7]\e[0m ${YELL}ADD WIRGUARD     \033[34m[6]\e[0m ${YELL}DELETE NOTIF BOT${NC}"
+echo -e " \033[33m│$NC \033[36m[4]\e[0m ${YELL}MENU TROJAN${NC}   \033[36m[8]\e[0m ${YELL}ADD PISIPHON     \033[36m[6]\e[0m ${YELL}ADD BOT SSH${NC}"
+echo -e " \033[34m╰══════════════════════════════════════════════════════════╯\e[0m"
+echo -e " \033[31m╭══════════════════════════════════════════════════════════╮\e[0m"
 echo -e " \033[32m│$NC \033[36mIP VPS\e[0m        :  ${putih}$IPVPS${NC}"
 echo -e " \033[32m│$NC \033[34mClient Name\e[0m   :  ${putih}$Name${NC}"
 echo -e " \033[32m│$NC \033[33mExp Script\e[0m    :  ${putih}$dayleft Days${NC}"
 echo -e " \033[32m│$NC \033[31mName Author\e[0m   :  ${putih}$Namee${NC}"
-echo -e " \033[32m╰══════════════════════════════════════════════════════════╯\e[0m"
+echo -e " \033[33m╰══════════════════════════════════════════════════════════╯\e[0m"
+echo -e " \033[31m##########\033[33m##########\033[32m##########\033[34m##########\033[35m##########\033[36m##########\e[0m"
 echo -e ""
 read -p "   Select From Options [ 1 - 8 or x exit ] : " menu
 case $menu in
