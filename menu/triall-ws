@@ -95,13 +95,231 @@ VMESS_GRPC=`cat<<EOF
 }
 EOF`
 cat >/var/www/html/vmess-$user.txt <<-END
+=========================
+ Format OpenClash 443
+=========================
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7895
+ipv6: false
+mode: rule
+log-level: silent
+allow-lan: true
+external-controller: 0.0.0.0:9090
+secret: ""
+bind-address: "*"
+unified-delay: true
+profile:
+  store-selected: true
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: redir-host
+  listen: 0.0.0.0:7874
+  nameserver:
+    - 8.8.8.8
+    - 1.0.0.1
+    - https://dns.google/dns-query
+  fallback:
+    - 1.1.1.1
+    - 8.8.4.4
+    - https://cloudflare-dns.com/dns-query
+    - 112.215.203.254
+  default-nameserver:
+    - 8.8.8.8
+    - 1.1.1.1
+    - 112.215.203.254
+proxies:
+  - name: ${user}
+    server: ${sts}
+    port: 443
+    type: vmess
+    uuid: ${uuid}
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: ${domain}
+    network: ws
+    ws-opts:
+      path: /vmess
+      headers:
+        Host: ${domain}
+    udp: true
+proxy-groups:
+  - name: FASTSSH-SSHKIT-HOWDY
+    type: select
+    proxies:
+      - ${user}
+      - DIRECT
+rules:
+  - MATCH,FASTSSH-SSHKIT-HOWDY
+=========================
+ Format OpenClash 80
+=========================
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7895
+ipv6: false
+mode: rule
+log-level: silent
+allow-lan: true
+external-controller: 0.0.0.0:9090
+secret: ""
+bind-address: "*"
+unified-delay: true
+profile:
+  store-selected: true
+  store-fake-ip: true
+dns:
+  enable: true
+  ipv6: false
+  use-host: true
+  enhanced-mode: fake-ip
+  listen: 0.0.0.0:7874
+  nameserver:
+    - 8.8.8.8
+    - 1.0.0.1
+    - https://dns.google/dns-query
+  fallback:
+    - 1.1.1.1
+    - 8.8.4.4
+    - https://cloudflare-dns.com/dns-query
+    - 112.215.203.254
+  default-nameserver:
+    - 8.8.8.8
+    - 1.1.1.1
+    - 112.215.203.254
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.example"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - time.*.com
+    - time.*.gov
+    - time.*.edu.cn
+    - time.*.apple.com
+    - time1.*.com
+    - time2.*.com
+    - time3.*.com
+    - time4.*.com
+    - time5.*.com
+    - time6.*.com
+    - time7.*.com
+    - ntp.*.com
+    - ntp1.*.com
+    - ntp2.*.com
+    - ntp3.*.com
+    - ntp4.*.com
+    - ntp5.*.com
+    - ntp6.*.com
+    - ntp7.*.com
+    - "*.time.edu.cn"
+    - "*.ntp.org.cn"
+    - +.pool.ntp.org
+    - time1.cloud.tencent.com
+    - music.163.com
+    - "*.music.163.com"
+    - "*.126.net"
+    - musicapi.taihe.com
+    - music.taihe.com
+    - songsearch.kugou.com
+    - trackercdn.kugou.com
+    - "*.kuwo.cn"
+    - api-jooxtt.sanook.com
+    - api.joox.com
+    - joox.com
+    - y.qq.com
+    - "*.y.qq.com"
+    - streamoc.music.tc.qq.com
+    - mobileoc.music.tc.qq.com
+    - isure.stream.qqmusic.qq.com
+    - dl.stream.qqmusic.qq.com
+    - aqqmusic.tc.qq.com
+    - amobile.music.tc.qq.com
+    - "*.xiami.com"
+    - "*.music.migu.cn"
+    - music.migu.cn
+    - "*.msftconnecttest.com"
+    - "*.msftncsi.com"
+    - msftconnecttest.com
+    - msftncsi.com
+    - localhost.ptlogin2.qq.com
+    - localhost.sec.qq.com
+    - +.srv.nintendo.net
+    - +.stun.playstation.net
+    - xbox.*.microsoft.com
+    - xnotify.xboxlive.com
+    - +.battlenet.com.cn
+    - +.wotgame.cn
+    - +.wggames.cn
+    - +.wowsgame.cn
+    - +.wargaming.net
+    - proxy.golang.org
+    - stun.*.*
+    - stun.*.*.*
+    - +.stun.*.*
+    - +.stun.*.*.*
+    - +.stun.*.*.*.*
+    - heartbeat.belkin.com
+    - "*.linksys.com"
+    - "*.linksyssmartwifi.com"
+    - "*.router.asus.com"
+    - mesu.apple.com
+    - swscan.apple.com
+    - swquery.apple.com
+    - swdownload.apple.com
+    - swcdn.apple.com
+    - swdist.apple.com
+    - lens.l.google.com
+    - stun.l.google.com
+    - +.nflxvideo.net
+    - "*.square-enix.com"
+    - "*.finalfantasyxiv.com"
+    - "*.ffxiv.com"
+    - "*.mcdn.bilivideo.cn"
+    - +.media.dssott.com
+proxies:
+  - name: Xray_Vmess_non_TLS_${user}
+    server: ${sts}${domain}
+    port: 80
+    type: vmess
+    uuid: ${uuid}
+    alterId: 0
+    cipher: auto
+    tls: false
+    skip-cert-verify: true
+    servername: ${domain}
+    network: ws
+    ws-opts:
+      path: /vmess-ntls
+      headers:
+        Host: ${domain}
+    udp: true
+proxy-groups:
+  - name: Geo-Autoscript
+    type: select
+    proxies:
+      - XRAY_VMESS_NON_TLS_${user}
+      - DIRECT
+rules:
+  - MATCH,JsPhantom-Autoscript
 ==========================
-    Format Vmess WS (RHDNS)
+    Format Vmess WS (CDN)
 ==========================
 
-- name: geostore-Vmess-$user-WS (RHDNS)
+- name: geostore-Vmess-$user-WS (CDN)
   type: vmess
-  server: ${domain}
+  server: ${sts}
   port: 443
   uuid: ${uuid}
   alterId: 0
@@ -116,12 +334,12 @@ cat >/var/www/html/vmess-$user.txt <<-END
     headers:
       Host: ${domain}
 _______________________________________________________
-              Format Vmess WS (RHDNS) Non TLS
+              Format Vmess WS (CDN) Non TLS
 _______________________________________________________
 
-- name: geostore-$user-WS (RHDNS) Non TLS
+- name: geostore-$user-WS (CDN) Non TLS
   type: vmess
-  server: ${domain}
+  server: ${sts}
   port: 80
   uuid: ${uuid}
   alterId: 0
@@ -153,7 +371,7 @@ _______________________________________________________
   grpc-opts:
   grpc-service-name: vmess-grpc
 _______________________________________________________
-              Link Vmess Triall Account
+              Link Vmess Account
 _______________________________________________________
 Link TLS : vmess://$(echo $VMESS_WS | base64 -w 0)
 _______________________________________________________
@@ -169,9 +387,9 @@ vmesslink1="vmess://$(echo $VMESS_WS | base64 -w 0)"
 vmesslink2="vmess://$(echo $VMESS_NON_TLS | base64 -w 0)"
 vmesslink3="vmess://$(echo $VMESS_GRPC | base64 -w 0)"
 TEXT="
-<code>────────────────────────────────</code>
-<code>  SUCCES CREAT TRIALL VMESS ACCOUNT</code>
-<code>────────────────────────────────</code>
+<code>───────────────────────────</code>
+<code>    SUCCES CREAT AKUN VMESS</code>
+<code>───────────────────────────</code>
 <code>Remarks      : ${user}</code>
 <code>Domain       : ${domain}</code>
 <code>Host Slowdns : ${NS}</code>
@@ -200,7 +418,10 @@ TEXT="
 <code>───────────────────────────</code>
 <code>Format OpenClash :</code> https://${domain}:81/vmess-$user.txt
 <code>───────────────────────────</code>
-<code>Expired On : $exp</code>
+<code>Aktif Selama   : $masaaktif Hari</code>
+<code>Dibuat Pada    : $tnggl</code>
+<code>Berakhir Pada  : $expe</code>
+<code>───────────────────────────</code>
 "
 systemctl restart xray
 systemctl restart nginx
@@ -229,8 +450,8 @@ echo "#vm# ${user} ${exp} ${uuid} ${Quota}" >>/etc/vmess/.vmess.db
 curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 clear
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e " \e[1;97;101m   SUCCES CREAT TRIALL VMESS ACCOUNT    \e[0m"
-echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+  echo -e " \e[1;97;101m          SUCCES CREAT AKUN VMESS       \e[0m"
+  echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Remarks      : ${user}"
 echo -e "Domain       : ${domain}"
 echo -e "Host Slowdns : ${NS}"
@@ -256,7 +477,9 @@ echo -e "Link GRPC    : ${vmesslink3}"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Format OpenClash : https://${domain}:81/vmess-$user.txt"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Expired On : $exp"
+echo -e "Aktif Selama   : $masaaktif Hari"
+echo -e "Dibuat Pada    : $tnggl"
+echo -e "Berakhir Pada  : $expe"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e ""
 read -n 1 -s -r -p "Press [ Enter ] to back menu vmess"
