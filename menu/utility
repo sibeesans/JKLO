@@ -114,7 +114,7 @@ case $menu in
    monitor
    ;;
 17) clear ;
-   xp
+   wget https://raw.githubusercontent.com/Jengkolonline/nonton/main/nf.sh && chmod +x nf.sh && ./nf.sh
    ;;
 18) clear ;
    wget https://raw.githubusercontent.com/Jengkoltunnel/supreme/main/tcp.sh && chmod +x tcp.sh && ./tcp.sh
