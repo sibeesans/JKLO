@@ -35,9 +35,11 @@ CHATID=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 3)
 KEY=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 2)
 URL="https://api.telegram.org/bot$KEY/sendMessage"
 clear
-echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e " \e[1;97;101m     CREATE TRIALL TROJAN ACCOUNT       \e[0m"
-echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e " \033[31m##########\033[33m##########\033[32m##########\033[34m##########\033[35m##########\033[36m##########\e[0m"
+echo -e " \033[31m╭══════════════════════════════════════════════════════════╮\e[0m"
+echo -e " \033[34m│$NC\033[33m                   TRIAL Trojan ACCOUNT                   $NC\033[34m│\e[0m"
+echo -e " \033[33m╰══════════════════════════════════════════════════════════╯\e[0m"
+masaaktif=1
 Quota=5
 user=Trial-TR`</dev/urandom tr -dc 0-9 | head -c3`
 clear
