@@ -62,15 +62,232 @@ exp=$(grep -E "^#vl# " "/etc/vless/.vless.db" | cut -d ' ' -f 3 | sed -n "${CLIE
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 cat >/var/www/html/vless-$user.txt <<-END
 =======================
-      P R O J E C T
+ Format OpenClash 443
 =======================
-Owner: t.me/RizkiHdyt99
+
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7895
+ipv6: false
+mode: rule
+log-level: silent
+allow-lan: true
+external-controller: 0.0.0.0:9090
+secret: ""
+bind-address: "*"
+unified-delay: true
+profile:
+  store-selected: true
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: redir-host
+  listen: 0.0.0.0:7874
+  nameserver:
+    - 8.8.8.8
+    - 1.0.0.1
+    - https://dns.google/dns-query
+  fallback:
+    - 1.1.1.1
+    - 8.8.4.4
+    - https://cloudflare-dns.com/dns-query
+    - 112.215.203.254
+  default-nameserver:
+    - 8.8.8.8
+    - 1.1.1.1
+    - 112.215.203.254
+proxies:
+  - name: ${user}
+    server: ${sts}
+    port: 443
+    type: vmess
+    uuid: ${uuid}
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: ${domain}
+    network: ws
+    ws-opts:
+      path: /vmess
+      headers:
+        Host: ${domain}
+    udp: true
+proxy-groups:
+  - name: FASTSSH-SSHKIT-HOWDY
+    type: select
+    proxies:
+      - ${user}
+      - DIRECT
+rules:
+  - MATCH,FASTSSH-SSHKIT-HOWDY
+
+=======================
+ Format Openclash 80
+=======================
+
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7895
+ipv6: false
+mode: rule
+log-level: silent
+allow-lan: true
+external-controller: 0.0.0.0:9090
+secret: ""
+bind-address: "*"
+unified-delay: true
+profile:
+  store-selected: true
+  store-fake-ip: true
+dns:
+  enable: true
+  ipv6: false
+  use-host: true
+  enhanced-mode: fake-ip
+  listen: 0.0.0.0:7874
+  nameserver:
+    - 8.8.8.8
+    - 1.0.0.1
+    - https://dns.google/dns-query
+  fallback:
+    - 1.1.1.1
+    - 8.8.4.4
+    - https://cloudflare-dns.com/dns-query
+    - 112.215.203.254
+  default-nameserver:
+    - 8.8.8.8
+    - 1.1.1.1
+    - 112.215.203.254
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.example"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - time.*.com
+    - time.*.gov
+    - time.*.edu.cn
+    - time.*.apple.com
+    - time1.*.com
+    - time2.*.com
+    - time3.*.com
+    - time4.*.com
+    - time5.*.com
+    - time6.*.com
+    - time7.*.com
+    - ntp.*.com
+    - ntp1.*.com
+    - ntp2.*.com
+    - ntp3.*.com
+    - ntp4.*.com
+    - ntp5.*.com
+    - ntp6.*.com
+    - ntp7.*.com
+    - "*.time.edu.cn"
+    - "*.ntp.org.cn"
+    - +.pool.ntp.org
+    - time1.cloud.tencent.com
+    - music.163.com
+    - "*.music.163.com"
+    - "*.126.net"
+    - musicapi.taihe.com
+    - music.taihe.com
+    - songsearch.kugou.com
+    - trackercdn.kugou.com
+    - "*.kuwo.cn"
+    - api-jooxtt.sanook.com
+    - api.joox.com
+    - joox.com
+    - y.qq.com
+    - "*.y.qq.com"
+    - streamoc.music.tc.qq.com
+    - mobileoc.music.tc.qq.com
+    - isure.stream.qqmusic.qq.com
+    - dl.stream.qqmusic.qq.com
+    - aqqmusic.tc.qq.com
+    - amobile.music.tc.qq.com
+    - "*.xiami.com"
+    - "*.music.migu.cn"
+    - music.migu.cn
+    - "*.msftconnecttest.com"
+    - "*.msftncsi.com"
+    - msftconnecttest.com
+    - msftncsi.com
+    - localhost.ptlogin2.qq.com
+    - localhost.sec.qq.com
+    - +.srv.nintendo.net
+    - +.stun.playstation.net
+    - xbox.*.microsoft.com
+    - xnotify.xboxlive.com
+    - +.battlenet.com.cn
+    - +.wotgame.cn
+    - +.wggames.cn
+    - +.wowsgame.cn
+    - +.wargaming.net
+    - proxy.golang.org
+    - stun.*.*
+    - stun.*.*.*
+    - +.stun.*.*
+    - +.stun.*.*.*
+    - +.stun.*.*.*.*
+    - heartbeat.belkin.com
+    - "*.linksys.com"
+    - "*.linksyssmartwifi.com"
+    - "*.router.asus.com"
+    - mesu.apple.com
+    - swscan.apple.com
+    - swquery.apple.com
+    - swdownload.apple.com
+    - swcdn.apple.com
+    - swdist.apple.com
+    - lens.l.google.com
+    - stun.l.google.com
+    - +.nflxvideo.net
+    - "*.square-enix.com"
+    - "*.finalfantasyxiv.com"
+    - "*.ffxiv.com"
+    - "*.mcdn.bilivideo.cn"
+    - +.media.dssott.com
+proxies:
+  - name: Xray_Vless_non_TLS_${user}
+    server: ${sts}${domain}
+    port: 80
+    type: vless
+    uuid: ${uuid}
+    cipher: auto
+    tls: false
+    skip-cert-verify: true
+    servername: ${sni}
+    network: ws
+    ws-opts:
+      path: /vless-ntls
+      headers:
+        Host: ${domain}
+    udp: true
+proxy-groups:
+  - name: JsPhantom-Autoscript
+    type: select
+    proxies:
+      - Xray_Vless_non_TLS_${user}
+      - DIRECT
+rules:
+  - MATCH,JsPhantom-Autoscript
+
 =======================
       Format Vless WS (CDN)
 =======================
 
 - name: geostore-$user-WS (CDN)
-  server: ${domain}
+  server: ${sts}
   port: 443
   type: vless
   uuid: ${uuid}
@@ -88,7 +305,7 @@ _______________________________
  Format Vless WS (CDN) Non TLS
 _______________________________
 - name: geostore-$user-WS (CDN) Non TLS
-  server: ${domain}
+  server: ${sts}
   port: 80
   type: vless
   uuid: ${uuid}
@@ -122,29 +339,90 @@ _______________________________
 _______________________________
  Link Vless Account
 _______________________________
-Link TLS : vless://${uuid}@${domain}:443?path=/vless&security=tls&encryption=none&host=${domain}&type=ws#${user}"
+Link TLS : vless://${uuid}@${sts}:443?path=/vless&security=tls&encryption=none&host=${domain}&type=ws#${user}"
 _______________________________
-Link none TLS : vless://${uuid}@${domain}:80?path=/vless&encryption=none&host=${domain}&type=ws#${user}"
+Link none TLS : vless://${uuid}@${sts}:80?path=/vless&encryption=none&host=${domain}&type=ws#${user}"
 _______________________________
 Link GRPC : vless://${uuid}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=${domain}#${user}
 _______________________________
 
 END
-vlesslink1="vless://${uuid}@${domain}:443?path=/vless&security=tls&encryption=none&host=${domain}&type=ws#${user}"
-vlesslink2="vless://${uuid}@${domain}:80?path=/vless&encryption=none&host=${domain}&type=ws#${user}"
+vlesslink1="vless://${uuid}@${sts}:443?path=/vless&security=tls&encryption=none&host=${domain}&type=ws#${user}"
+vlesslink2="vless://${uuid}@${sts}:80?path=/vless&encryption=none&host=${domain}&type=ws#${user}"
 vlesslink3="vless://${uuid}@${domain}:443?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=${domain}#${user}"
+TEXT="
+<code>──────────────────────────</code>
+<code>    SUCCES CREAT AKUN VLESS</code>
+<code>──────────────────────────</code>
+<code>Remarks      : ${user}</code>
+<code>Domain       : ${domain}</code>
+<code>Location     : $CITY</code>
+<code>User Quota   : ${Quota} GB</code>
+<code>Port TLS     : 443</code>
+<code>Port DNS     : 443, 53</code>
+<code>Port NTLS    : 80, 8080, 2086</code>
+<code>Port GRPC    : 443</code>
+<code>Port XRAY    : 443,80</code>
+<code>User ID      : ${uuid}</code>
+<code>AlterId      : 0</code>
+<code>Security     : auto</code>
+<code>Network      : WS or gRPC</code>
+<code>Path         : /vless - /multipath</code>
+<code>Path Dynamic : CF-XRAY:http://bug.com</code>
+<code>──────────────────────────</code>
+<code>Link TLS     :</code>
+<code>${vlesslink1}</code>}
+<code>───────────────────────────</code>
+<code>Link NTLS    :</code>
+<code>${vlesslink2}</code>
+<code>───────────────────────────</code>
+<code>Link GRPC    :</code>
+<code>${vlesslink3}</code>
+<code>───────────────────────────</code>
+<code>Format OpenClash :</code> https://${domain}:81/vless-$user.txt
+<code>───────────────────────────</code>
+<code>Aktif Selama   : $masaaktif Hari</code>
+<code>Dibuat Pada    : $tnggl</code>
+<code>Berakhir Pada  : $expe</code>
+<code>───────────────────────────</code>
+"
+systemctl restart xray
+systemctl restart nginx
+service cron restart
+if [ ! -e /etc/vless ]; then
+  mkdir -p /etc/vless
+fi
+
+if [ -z ${Quota} ]; then
+  Quota="0"
+fi
+
+c=$(echo "${Quota}" | sed 's/[^0-9]*//g')
+d=$((${c} * 1024 * 1024 * 1024))
+
+if [[ ${c} != "0" ]]; then
+  echo "${d}" >/etc/vless/${user}
+fi
+DATADB=$(cat /etc/vless/.vless.db | grep "^#vl#" | grep -w "${user}" | awk '{print $2}')
+if [[ "${DATADB}" != '' ]]; then
+  sed -i "/\b${user}\b/d" /etc/vless/.vless.db
+fi
+echo "#vl# ${user} ${exp} ${uuid} ${Quota}" >>/etc/vless/.vless.db
+
+curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 clear
-echo -e ""
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "  \e[1;97;101m        CONFIG VLESS ACCOUNT         \e[0m"
+echo -e " \e[1;97;101m       SUCCES CREAT VLESS ACCOUNT       \e[0m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Remarks     : ${user}"
 echo -e "Domain      : ${domain}"
 echo -e "Location    : $CITY"
 echo -e "User Quota  : ${Quota} GB"
 echo -e "port TLS    : 443"
+echo -e "Port DNS    : 443, 53 "
 echo -e "Port NTLS   : 80, 8080, 2086"
 echo -e "Port GRPC   : 443"
+echo -e "Port XRAY   : 443,80"
 echo -e "User ID     : ${uuid}"
 echo -e "AlterId     : 0"
 echo -e "Security    : auto"
@@ -152,17 +430,18 @@ echo -e "Encryption  : none"
 echo -e "Path        : /vles - /multipath"
 echo -e "Path Dynamic : CF-XRAY:http://bug.com</"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link WS TLS       : ${vlesslink1}"
+echo -e "Link TLS   : ${vlesslink1}"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link WS None TLS  : ${vlesslink2}"
+echo -e "Link NTLS  : ${vlesslink2}"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link GRPC         : ${vlesslink3}"
+echo -e "Link GRPC  : ${vlesslink3}"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Format OpenClash : https://${domain}:81/vless-$user.txt"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Created On        : $hariini"
-echo -e "Expired On        : $exp"
+echo -e "Aktif Selama   : $masaaktif Hari"
+echo -e "Dibuat Pada    : $tnggl"
+echo -e "Berakhir Pada  : $expe"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e ""
-read -n 1 -s -r -p "Press [ Enter ] to back on menu"
+read -n 1 -s -r -p "Press [ Enter ] to back menu vless"
 vless
