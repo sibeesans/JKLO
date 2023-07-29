@@ -165,10 +165,10 @@ case $menu in
   wget ${JKLO}psiphon.sh && chmod +x psiphon.sh && ./psiphon.sh
    ;;
 9) clear ;
-    utility
+    ssr
     ;;
 10) clear ;
-   bot
+   lib
    ;;
 11) clear ;
     utility
