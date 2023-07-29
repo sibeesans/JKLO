@@ -57,6 +57,9 @@ echo -e "  ${grenbo}[12] ${NC}${YELL}Update Script${NC}"
 echo -e "  ${grenbo}[13] ${NC}${YELL}Clear All Log ${NC}"
 echo -e "  ${grenbo}[14] ${NC}${YELL}Delete All Akun Exp${NC}"
 echo -e "  ${grenbo}[15] ${NC}${YELL}Installer UDP ${NC}"
+echo -e "  ${grenbo}[16] ${NC}${YELL}Monitor ${NC}"
+echo -e "  ${grenbo}[17] ${NC}${YELL}DNS GLOBAL ${NC}"
+echo -e "  ${grenbo}[18] ${NC}${YELL}INSTALL BBR TCP ${NC}"
 echo -e ""
 echo -e "  ${grenbo}[0] ${NC} ${YELL}Back To Menu${NC}"
 echo -e ""
@@ -106,6 +109,15 @@ case $menu in
    ;;
 15) clear ;
    wget --load-cookies /tmp/cookies.txt ${UDPCORE} -O install-udp && rm -rf /tmp/cookies.txt && chmod +x install-udp && ./install-udp
+   ;;
+16) clear ;
+   monitor
+   ;;
+17) clear ;
+   xp
+   ;;
+18) clear ;
+   wget https://raw.githubusercontent.com/Jengkoltunnel/supreme/main/tcp.sh && chmod +x tcp.sh && ./tcp.sh
    ;;
 0) clear ;
    menu
