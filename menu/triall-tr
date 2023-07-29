@@ -208,9 +208,7 @@ TEXT="
 <code>Format OpenClash :</code> 
 https://${domain}:81/trojan-$user.txt
 <code>──────────────────────────</code>
-<code>Aktif Selama   : $masaaktif Hari</code>
-<code>Dibuat Pada    : $tnggl</code>
-<code>Berakhir Pada  : $expe</code>
+<code>Aktif Selama   : 60 Menit</code>
 <code>───────────────────────────</code>
 "
 systemctl restart xray
@@ -261,7 +259,7 @@ echo -e "Link NTLS : ${trojanlink2}"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Format OpenClash : https://${domain}:81/trojan-$user.txt"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Expired On : $exp"
+echo -e "Expired On : 60 Menit"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e ""
 echo "killtrial trojan ${user}" | at now +60 minutes &> /dev/null
