@@ -3,7 +3,7 @@ clear
 ipsaya=$(wget -qO- ipinfo.io/ip)
 data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 date_list=$(date +"%Y-%m-%d" -d "$data_server")
-data_ip="https://raw.githubusercontent.com/jsjsjsjsjsjsjsjsjsjsjsjs/mekmek/main/izin"
+data_ip="https://raw.githubusercontent.com/Jengkolonline/izinn/main/ip"
 checking_sc() {
   useexp=$(wget -qO- $data_ip | grep $ipsaya | awk '{print $3}')
   if [[ $date_list < $useexp ]]; then
@@ -17,8 +17,8 @@ checking_sc() {
     echo -e "   \033[0;33mYour VPS${NC} $ipsaya \033[0;33mHas been Banned${NC}"
     echo -e "     \033[0;33mBuy access permissions for scripts${NC}"
     echo -e "             \033[0;33mContact Admin :${NC}"
-    echo -e "      \033[0;36mTelegram${NC} t.me/telekalian"
-    echo -e "      ${GREEN}WhatsApp${NC} wa.me/no_kalian"
+    echo -e "      \033[0;36mTelegram${NC} t.me/Jengkol_Online"
+    echo -e "      ${GREEN}WhatsApp${NC} wa.me/6282372139631"
     echo -e "\033[1;93m────────────────────────────────────────────\033[0m"
     exit
   fi
@@ -418,9 +418,7 @@ TEXT="
 <code>───────────────────────────</code>
 <code>Format OpenClash :</code> https://${domain}:81/vmess-$user.txt
 <code>───────────────────────────</code>
-<code>Aktif Selama   : $masaaktif Hari</code>
-<code>Dibuat Pada    : $tnggl</code>
-<code>Berakhir Pada  : $expe</code>
+<code>Aktif Selama   : 60 Menit</code>
 <code>───────────────────────────</code>
 "
 systemctl restart xray
@@ -477,10 +475,9 @@ echo -e "Link GRPC    : ${vmesslink3}"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Format OpenClash : https://${domain}:81/vmess-$user.txt"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Aktif Selama   : $masaaktif Hari"
-echo -e "Dibuat Pada    : $tnggl"
-echo -e "Berakhir Pada  : $expe"
+echo -e "Aktif Selama   : 60 Menit"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e ""
+echo "killtrial vmess ${user}" | at now +60 minutes &> /dev/null
 read -n 1 -s -r -p "Press [ Enter ] to back menu vmess"
 vmess
