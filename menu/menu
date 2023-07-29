@@ -126,10 +126,10 @@ echo -e "                          \033[32mTROJAN = $sssh ${NC}"
 echo -e "                          \033[32mSS     = $sssh ${NC}"
 echo -e "                        \033[31m═\033[32m═\033[33m═\033[34m═\033[35m═\033[36m═\033[32m═\033[34m═\033[31m═\033[33m═\033[35m═\033[36m═\033[33m═\033[31m═\e[0m"
 echo -e " \033[35m╭══════════════════════════════════════════════════════════╮\e[0m"
-echo -e " \033[33m│$NC \033[32m[01]\e[0m ${YELL}MENU SSH&OVPN${NC} \033[32m[05]\e[0m ${YELL}MENU SHADOWSHOCK \033[32m[09]\e[0m ${YELL}MENU SYSTIEM${NC}"
-echo -e " \033[33m│$NC \033[31m[02]\e[0m ${YELL}MENU VMESS${NC}    \033[31m[06]\e[0m ${YELL}ADD L2TP         \033[31m[10]\e[0m ${YELL}ADD BOT NOTIF${NC}"
-echo -e " \033[33m│$NC \033[34m[03]\e[0m ${YELL}MENU VLESS${NC}    \033[34m[07]\e[0m ${YELL}ADD WIRGUARD     \033[34m[11]\e[0m ${YELL}DEL BOT NOTIF${NC}"
-echo -e " \033[33m│$NC \033[36m[04]\e[0m ${YELL}MENU TROJAN${NC}   \033[36m[08]\e[0m ${YELL}ADD PISIPHON     \033[36m[12]\e[0m ${YELL}ADD BOT SSH${NC}"
+echo -e " \033[33m│$NC \033[32m[01]\e[0m ${YELL}MENU SSH&OVPN${NC} \033[32m[05]\e[0m ${YELL}MENU SHADOWSHOCK \033[32m[09]\e[0m ${YELL}ShadowsoksR${NC}"
+echo -e " \033[33m│$NC \033[31m[02]\e[0m ${YELL}MENU VMESS${NC}    \033[31m[06]\e[0m ${YELL}ADD L2TP         \033[31m[10]\e[0m ${YELL} Shadowsoks-Liv${NC}"
+echo -e " \033[33m│$NC \033[34m[03]\e[0m ${YELL}MENU VLESS${NC}    \033[34m[07]\e[0m ${YELL}ADD WIRGUARD     \033[34m[11]\e[0m ${YELL}MENU SYSTIEM${NC}"
+echo -e " \033[33m│$NC \033[36m[04]\e[0m ${YELL}MENU TROJAN${NC}   \033[36m[08]\e[0m ${YELL}ADD PISIPHON     \033[36m[12]\e[0m ${YELL}MENU BOT${NC}"
 echo -e " \033[34m╰══════════════════════════════════════════════════════════╯\e[0m"
 echo -e " \033[31m╭══════════════════════════════════════════════════════════╮\e[0m"
 echo -e " \033[32m│$NC \033[36mIP VPS\e[0m        :  ${putih}$IPVPS${NC}"
@@ -168,6 +168,12 @@ case $menu in
     utility
     ;;
 10) clear ;
+   bot
+   ;;
+11) clear ;
+    utility
+    ;;
+12) clear ;
    bot
    ;;
 x) clear ;
