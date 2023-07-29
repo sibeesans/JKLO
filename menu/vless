@@ -50,7 +50,7 @@ checking_sc() {
 }
 checking_sc
 clear
-NUMBER_OF_CLIENTS=$(grep -c -E "^#vm# " "/etc/vless/.vless.db")
+NUMBER_OF_CLIENTS=$(grep -c -E "^#vl# " "/etc/vless/.vless.db")
         if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
                 clear
         echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -70,7 +70,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#vm# " "/etc/vless/.vless.db")
     echo -e "           Edit Quota Vless          \E[0m"
     echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo ""
-        grep -E "^#vm# " "/etc/vless/.vless.db" | cut -d ' ' -f 2 | column -t | sort | uniq
+        grep -E "^#vl# " "/etc/vless/.vless.db" | cut -d ' ' -f 2 | column -t | sort | uniq
     echo ""
     red "tap enter to go back"
     echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -97,7 +97,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#vm# " "/etc/vless/.vless.db")
 
 function editlimit(){
 clear
-NUMBER_OF_CLIENTS=$(grep -c -E "^#vm# " "/etc/vless/.vless.db")
+NUMBER_OF_CLIENTS=$(grep -c -E "^#vl# " "/etc/vless/.vless.db")
         if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
                 clear
         echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -117,7 +117,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#vm# " "/etc/vless/.vless.db")
     echo -e "           Edit Limit Vless          \E[0m"
     echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo ""
-        grep -E "^#vm# " "/etc/vless/.vless.db" | cut -d ' ' -f 2 | column -t | sort | uniq
+        grep -E "^#vl# " "/etc/vless/.vless.db" | cut -d ' ' -f 2 | column -t | sort | uniq
     echo ""
     red "tap enter to go back"
     echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -141,7 +141,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#vm# " "/etc/vless/.vless.db")
 }
 function resquota(){
 clear
-NUMBER_OF_CLIENTS=$(grep -c -E "^#vm# " "/etc/vless/.vless.db")
+NUMBER_OF_CLIENTS=$(grep -c -E "^#vl# " "/etc/vless/.vless.db")
         if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
                 clear
         echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -161,7 +161,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#vm# " "/etc/vless/.vless.db")
     echo -e "           Resset Quota Vless          \E[0m"
     echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo ""
-        grep -E "^#vm# " "/etc/vless/.vless.db" | cut -d ' ' -f 2 | column -t | sort | uniq
+        grep -E "^#vl# " "/etc/vless/.vless.db" | cut -d ' ' -f 2 | column -t | sort | uniq
     echo ""
     red "tap enter to go back"
     echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
