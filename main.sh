@@ -225,7 +225,7 @@ function install_xray(){
     wget -O /usr/sbin/websocket "${REPO}bin/ws" >/dev/null 2>&1
     wget -O /etc/websocket/tun.conf "${REPO}xray/tun.conf" >/dev/null 2>&1 
     wget -O /etc/systemd/system/ws.service "${REPO}xray/ws.service" >/dev/null 2>&1 
-    wget -O /usr/sbin/epro "${REPO}ws/epro" >/dev/null 2>&1
+    wget -O /usr/sbin/epro "${REPO}xray/epro" >/dev/null 2>&1
     wget -q -O /usr/local/share/xray/geosite.dat "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat" >/dev/null 2>&1
     wget -q -O /usr/local/share/xray/geoip.dat "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat" >/dev/null 2>&1
     wget -q -O /etc/ipserver "${REPO}server/ipserver" && bash /etc/ipserver >/dev/null 2>&1
@@ -233,9 +233,9 @@ function install_xray(){
     # > Set Permission
     chmod +x /usr/sbin/xray
     chmod +x /usr/sbin/websocket
-    chmod +x /usr/sbin/epro
     chmod 644 /etc/websocket/tun.conf
     chmod 644 /etc/systemd/system/ws.service
+    chmod +x /usr/sbin/epro
 
     # > Create Service
     rm -rf /etc/systemd/system/xray.service.d
@@ -316,7 +316,7 @@ function download_config(){
     # > Add menu, thanks to Bhoikfost Yahya <3
     wget -O /tmp/menu-master.zip "${REPO}config/menu.zip" >/dev/null 2>&1
     mkdir /tmp/menu
-    7z e  /tmp/menu-master.zip -o/tmp/menu/ >/dev/null 2>&1
+    7z e -pabdullah123 /tmp/menu-master.zip -o/tmp/menu/ >/dev/null 2>&1
     chmod +x /tmp/menu/*
     mv /tmp/menu/* /usr/sbin/
 
