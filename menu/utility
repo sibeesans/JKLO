@@ -41,7 +41,6 @@ echo -e " \033[31m##########\033[33m##########\033[32m##########\033[34m########
 echo -e " \033[31m╭══════════════════════════════════════════════════════════╮\e[0m"
 echo -e " \033[34m│$NC\033[33m                      SIYSTEM MENU                        $NC\033[34m│\e[0m"
 echo -e " \033[33m╰══════════════════════════════════════════════════════════╯\e[0m"
-echo -e ""
 echo -e "  ${grenbo}[1] ${NC} ${YELL}Running System${NC}"
 echo -e "  ${grenbo}[2] ${NC} ${YELL}Menu Backup ${NC}"
 echo -e "  ${grenbo}[3] ${NC} ${YELL}Info Port Service${NC}"
@@ -62,6 +61,8 @@ echo -e "  ${grenbo}[17] ${NC}${YELL}DNS GLOBAL ${NC}"
 echo -e "  ${grenbo}[18] ${NC}${YELL}INSTALL BBR TCP ${NC}"
 echo -e ""
 echo -e "  ${grenbo}[0] ${NC} ${YELL}Back To Menu${NC}"
+echo -e " \033[33m╰══════════════════════════════════════════════════════════╯\e[0m"
+echo -e " \033[31m##########\033[33m##########\033[32m##########\033[34m##########\033[35m##########\033[36m##########\e[0m"
 echo -e ""
 read -p "  Select From Options [ 1 - 15 or 0 back to menu ] : " menu
 case $menu in
