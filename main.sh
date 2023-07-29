@@ -123,6 +123,10 @@ function base_package() {
     tar wget curl ruby zip unzip p7zip-full python3-pip haproxy libc6  gnupg gnupg2 gnupg1 \
     msmtp-mta ca-certificates bsd-mailx iptables iptables-persistent netfilter-persistent \
     net-tools  jq openvpn easy-rsa python3-certbot-nginx p7zip-full tuned fail2ban -y
+    sudo apt-get install python3.7-dev 
+    apt install python3.7-distutils
+    python3.7 -m pip install telethon
+    python3.7 -m pip install pyarmor
     apt-get clean all; sudo apt-get autoremove -y
     apt-get install lolcat -y
     apt-get install vnstat -y
@@ -221,11 +225,15 @@ function install_xray(){
     wget -O /usr/sbin/websocket "${REPO}bin/ws" >/dev/null 2>&1
     wget -O /etc/websocket/tun.conf "${REPO}xray/tun.conf" >/dev/null 2>&1 
     wget -O /etc/systemd/system/ws.service "${REPO}xray/ws.service" >/dev/null 2>&1 
+    wget -O /usr/sbin/epro "${REPO}ws/epro" >/dev/null 2>&1
+    wget -q -O /usr/local/share/xray/geosite.dat "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat" >/dev/null 2>&1
+    wget -q -O /usr/local/share/xray/geoip.dat "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat" >/dev/null 2>&1
     wget -q -O /etc/ipserver "${REPO}server/ipserver" && bash /etc/ipserver >/dev/null 2>&1
 
     # > Set Permission
     chmod +x /usr/sbin/xray
     chmod +x /usr/sbin/websocket
+    chmod +x /usr/sbin/epro
     chmod 644 /etc/websocket/tun.conf
     chmod 644 /etc/systemd/system/ws.service
 
