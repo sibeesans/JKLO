@@ -49,15 +49,73 @@ sed -i '/#trojangrpc$/a\#tr# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 cat >/var/www/html/trojan-$user.txt <<-END
 =============================
-         P R O J E C T
+          P R O J E C T
 =============================
- Owner: t.me/telekalian
+Owner: t.me/Jengkol_Online 
 =============================
- Format Trojan GO/WS (CDN)
+Format OpenClash
+=============================
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7895
+ipv6: false
+mode: rule
+log-level: silent
+allow-lan: true
+external-controller: 0.0.0.0:9090
+secret: ""
+bind-address: "*"
+unified-delay: true
+profile:
+  store-selected: true
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: redir-host
+  listen: 0.0.0.0:7874
+  nameserver:
+    - 8.8.8.8
+    - 1.0.0.1
+    - https://dns.google/dns-query
+  fallback:
+    - 1.1.1.1
+    - 8.8.4.4
+    - https://cloudflare-dns.com/dns-query
+    - 112.215.203.254
+  default-nameserver:
+    - 8.8.8.8
+    - 1.1.1.1
+    - 112.215.203.254
+proxies:
+  - name: ${user}
+    server: ${sts}
+    port: 443
+    type: trojan
+    password: ${uuid}
+    skip-cert-verify: true
+    sni: ${domain}
+    network: ws
+    ws-opts:
+      path: /trojan-ws
+      headers:
+        Host: ${domain}
+    udp: true
+proxy-groups:
+  - name: FASTSSH-SSHKIT-HOWDY
+    type: select
+    proxies:
+      - ${user}
+      - DIRECT
+rules:
+  - MATCH,FASTSSH-SSHKIT-HOWDY
+=============================
+Format Trojan TLS (CDN)
 =============================
 
-- name: Trojan-$user-GO/WS (CDN)
-  server: ${domain}
+- name: Trojan-$user
+  server: ${sts}
   port: 443
   type: trojan
   password: ${uuid}
@@ -66,29 +124,48 @@ cat >/var/www/html/trojan-$user.txt <<-END
   skip-cert-verify: true
   udp: true
   ws-opts:
-    path: /trojan-ws
-    headers:
-        Host: ${domain}
+   path: /trojan
+   headers:
+    Host: ${domain}
+==============================
+ Format Trojan NTLS (CDN)
+==============================
+- name: Trojan-$user
+  type: trojan
+  server: ${sts}
+  port: 80
+  uuid: ${uuid}
+  cipher: auto
+  udp: true
+  tls: false
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+   path: /trojan
+   headers:
+    Host: ${domain}
 _______________________________
   Format Trojan gRPC
 _______________________________
 
-- name: Trojan-$user-gRPC (SNI)
-  type: trojan
-  server: ${domain}
+- name: Trojan-$user
+  server: ${sts}
   port: 443
-  password: ${uuid}
-  udp: true
-  sni: ${domain}
-  skip-cert-verify: true
+  type: trojan
+  password: $uuid
   network: grpc
-  grpc-opts:
-    grpc-service-name: trojan-grpc
+  sni: $domain
+  skip-cert-verify: true
+  udp: true
+   grpc-opts:
+    grpc-service-name: "trojan-grpc"
 
 _______________________________
-Link Trojan Triall Account
+Link Trojan Account
 _______________________________
-Link WS : trojan://${uuid}@${domain}:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}
+Link TLS : trojan://${uuid}@${sts}:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}
+_______________________________
+Link NTLS : trojan://${uuid}@${sts}:80?path=%2Ftrojan-ws&security=none&host=${domain}&type=ws#${user}
 _______________________________
 Link GRPC : trojan://${uuid}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=${domain}#${user}
 _______________________________
@@ -96,26 +173,25 @@ _______________________________
 
 
 END
-trojanlink="trojan://${uuid}@${domain}:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
-trojanlink1="trojan://${uuid}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=${domain}#${user}"
-
+trojanlink="trojan://${uuid}@${sts}:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
+trojanlink1="trojan://${uuid}@${sts}:80?path=%2Ftrojan-ws&security=none&host=${domain}&type=ws#${user}"
+trojanlink2="trojan://${uuid}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=${domain}#${user}"
 TEXT="
 <code>──────────────────────────</code>
-<code>    SUCCES CREAT TRIALL TROJAN</code/>
+<code>    SUCCES CREAT TROJAN</code>
 <code>──────────────────────────</code>
 <code>Remarks      : ${user}</code>
 <code>Domain       : ${domain}</code>
-<code>Host Slowdns : ${NS}</code>
-<code>Pub Key     : ${PUB}</code>
 <code>Location     : $CITY</code>
 <code>User Quota   : ${Quota} GB</code>
 <code>Port DNS     : 443,53</code>
-<code>Port WS(TLS)  : 443</code>
-<code>Port GRPC     : 443</code>
-<code>User ID     : ${uuid}</code>
+<code>Port TLS     : 443</code>
+<code>Port NTLS    : 80,8080,8880</code>
+<code>Port GRPC    : 443</code>
+<code>User ID      : ${uuid}</code>
 <code>AlterId      : 0</code>
-<code>Security    : auto</code>
-<code>Network    : WS(TLS) or gRPC</code>
+<code>Security     : auto</code>
+<code>Network      : WS(TLS) or gRPC</code>
 <code>ServiceName  : trojan-grpc</code>
 <code>──────────────────────────</code>
 <code>Link TLS     :</code> 
@@ -124,10 +200,16 @@ TEXT="
 <code>Link NTLS    :</code> 
 <code>${trojanlink1}</code>
 <code>───────────────────────────</code>
+<code>Link Grpc    :</code> 
+<code>${trojanlink2}</code>
+<code>───────────────────────────</code>
 <code>Format OpenClash :</code> 
 https://${domain}:81/trojan-$user.txt
-<code>️Expired On : $exp</code>
 <code>──────────────────────────</code>
+<code>Aktif Selama   : $masaaktif Hari</code>
+<code>Dibuat Pada    : $tnggl</code>
+<code>Berakhir Pada  : $expe</code>
+<code>───────────────────────────</code>
 "
 systemctl restart xray
 systemctl restart nginx
@@ -151,17 +233,17 @@ if [[ "${DATADB}" != '' ]]; then
   sed -i "/\b${user}\b/d" /etc/trojan/.trojan.db
 fi
 echo "#tr# ${user} ${exp} ${uuid} ${Quota}" >>/etc/trojan/.trojan.db
-
 curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 clear
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e " \e[1;97;101m   SUCCES TRIALL TROJAN ACCOUNT      \e[0m"
+echo -e " \e[1;97;101m            SUCCES CREAT TROJAN ACCOUNT               \e[0m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Remarks        : ${user}"
 echo -e "Host           : ${domain}"
 echo -e "Location       : $CITY"
 echo -e "User Quota     : ${Quota} GB"
-echo -e "Port WS(TLS)   : 443"
+echo -e "Port TLS       : 443"
+echo -e "Port NTLS      : 80,8080,8880"
 echo -e "Port  gRPC     : 443"
 echo -e "User ID        : ${uuid}"
 echo -e "AlterID        : 0"
@@ -169,14 +251,16 @@ echo -e "Security       : auto"
 echo -e "Path           : /trojan"
 echo -e "Network        : WS(TLS) or gRPC"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link WS   : ${trojanlink}"
+echo -e "Link TLS  : ${trojanlink}"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link GRPC : ${trojanlink1}"
+echo -e "Link NTLS : ${trojanlink1}"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link NTLS : ${trojanlink2}"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Format OpenClash : https://${domain}:81/trojan-$user.txt"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Expired On : $exp"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e ""
-read -n 1 -s -r -p "Press [ Enter ] to back on menu"
+read -n 1 -s -r -p "Press [ Enter ] to back menu trojan"
 trojan
