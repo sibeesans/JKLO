@@ -18,7 +18,14 @@ swap=$(free -m | awk 'NR==4 {print $2}')
 freq=$(awk -F: ' /cpu MHz/ {freq=$2} END {print freq}' /proc/cpuinfo)
 cores=$(awk -F: '/model name/ {core++} END {print core}' /proc/cpuinfo)
 cname=$(awk -F: '/model name/ {name=$2} END {print name}' /proc/cpuinfo)
-Exp="LIFETIME"
+# // Exporting IP Address
+export MYIP=$( curl -s https://ipinfo.io/ip/ )
+Name=$(curl -sS ${Repo1}izin | grep $MYIP | awk '{print $2}')
+Exp=$(curl -sS ${Repo1}izin | grep $MYIP | awk '{print $3}')
+data_ip="https://raw.githubusercontent.com/Jengkolonline/izinn/main/ip"
+d2=$(date -d "$date_list" +"+%s")
+d1=$(date -d "$Exp" +"+%s")
+dayleft=$(( ($d1 - $d2) / 86400 ))
 Name="JengkolOnline | Tunneling"
 Open_SSH=$(systemctl status ssh | grep active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g')
 Dropbear=$(systemctl status dropbear | grep active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g')
@@ -206,6 +213,7 @@ echo -e "\033[93mIsp Server$NC          $grenbo:$NC$yellow $ISP$NC"
 echo -e "\033[93mCity Server$NC         $grenbo:$NC$yellow $CITY$NC"
 echo -e "\033[93mDomain$NC              $grenbo:$NC$yellow $(cat /etc/xray/domain)$NC"
 echo -e "\033[93mServer Uptime$NC       $grenbo:$NC$yellow $(uptime -p | cut -d " " -f 2-10000)$NC"
+echo -e "\033[93mNAME CLIEN$NC          $grenbo:$NC$yellow $Name$NC"
 echo -e "\033[93mExp Script$NC          $grenbo:$NC$yellow $Exp$NC"
 echo -e "\033[93mVersion$NC             $grenbo:$NC$yellow Version 2.0.1$NC"
 echo -e " \033[31m╭══════════════════════════════════════════════════════════╮\e[0m"
