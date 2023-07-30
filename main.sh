@@ -129,69 +129,30 @@ function dir_xray() {
 
 ### Tambah domain
 function add_domain() {
-    ns_domain_cloudflare1() {
-apt install jq curl -y
-echo -e ""
-echo -e "jangan karakter singkat seperti: sg, id, hk,"
-echo -e "kalau bisa 1 kata yang unik dengan dikombinasikan dengan angka"
-echo -e "contoh: resa11"
-echo -e ""
-echo -e "\e[32msubdomain\e[0m.rizkishope.my.id"
-read -p "Mau subdomain apa?( 1kata ) : " sub
-if [[ $sub == "" ]]; then
-clear
-echo -e "${EROR} No Input Detected !"
-exit 1
-fi
-DOMAIN=rizkishope.my.id
-#sub=$(</dev/urandom tr -dc a-z0-9 | head -c4)
-echo $sub > /root/cfku
-SUB_DOMAIN=${sub}.rizkishope.my.id
-CF_ID=rizkihdyt6@gmail.com
-CF_KEY=15c999c8f900f4d36851f95d05f9c34b9130a
-echo "rizkishope.my.id" > /root/domain
-echo $SUB_DOMAIN > /root/domain
+    echo "`cat /etc/banner`" | lolcat
+    echo -e "${red}    ♦️${NC} ${green} CUSTOM SETUP DOMAIN VPS     ${NC}"
+    echo -e "${red}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
+    echo "1. Use Domain From Script / Gunakan Domain Dari Script"
+    echo "2. Choose Your Own Domain / Pilih Domain Sendiri"
+    echo -e "${red}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
+    read -rp "Choose Your Domain Installation : " dom 
 
-set -euo pipefail
-IP=$(wget -qO- ipinfo.io/ip);
-echo "Record DNS ${SUB_DOMAIN}..."
-ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \
-     -H "X-Auth-Email: ${CF_ID}" \
-     -H "X-Auth-Key: ${CF_KEY}" \
-     -H "Content-Type: application/json" | jq -r .result[0].id)
-
-RECORD=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records?name=${SUB_DOMAIN}" \
-     -H "X-Auth-Email: ${CF_ID}" \
-     -H "X-Auth-Key: ${CF_KEY}" \
-     -H "Content-Type: application/json" | jq -r .result[0].id)
-
-if [[ "${#RECORD}" -le 10 ]]; then
-     RECORD=$(curl -sLX POST "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records" \
-     -H "X-Auth-Email: ${CF_ID}" \
-     -H "X-Auth-Key: ${CF_KEY}" \
-     -H "Content-Type: application/json" \
-     --data '{"type":"A","name":"'${SUB_DOMAIN}'","content":"'${IP}'","ttl":120,"proxied":false}' | jq -r .result.id)
-fi
-
-RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records/${RECORD}" \
-     -H "X-Auth-Email: ${CF_ID}" \
-     -H "X-Auth-Key: ${CF_KEY}" \
-     -H "Content-Type: application/json" \
-     --data '{"type":"A","name":"'${SUB_DOMAIN}'","content":"'${IP}'","ttl":120,"proxied":false}')
-echo "Host : $SUB_DOMAIN"
-echo $SUB_DOMAIN > /root/domain
-cp /root/domain /etc/xray/domain
-
-echo "Host : $SUB_DOMAIN"
-sleep 1
-yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
-yellow "Domain added.."
-sleep 3
-echo "$SUB_DOMAIN" > /etc/xray/domain
-echo -e ""
-echo -e "subdomainmu telah jadi yaitu: $SUB_DOMAIN"
-}
-ns_domain_cloudflare1
+    if test $dom -eq 1; then
+    clear
+    wget -q -O /root/cf "${CDNF}/cf" >/dev/null 2>&1
+    chmod +x /root/cf
+    bash /root/cf | tee /root/install.log
+    print_success "DomainAll"
+    elif test $dom -eq 2; then
+    read -rp "Enter Your Domain : " domen 
+    echo $domen > /root/domain
+    cp /root/domain /etc/xray/domain
+    else 
+    echo "Not Found Argument"
+    exit 1
+    fi
+    echo -e "${GREEN}Done!${NC}"
+    sleep 2
     clear
 }
 
