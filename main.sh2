@@ -123,20 +123,12 @@ function base_package() {
     tar wget curl ruby zip unzip p7zip-full python3-pip haproxy libc6  gnupg gnupg2 gnupg1 \
     msmtp-mta ca-certificates bsd-mailx iptables iptables-persistent netfilter-persistent \
     net-tools  jq openvpn easy-rsa python3-certbot-nginx p7zip-full tuned fail2ban -y
-    sudo apt-get install python3.7-dev 
-    apt install python3.7-distutils
-    python3.7 -m pip install telethon
-    python3.7 -m pip install pyarmor
     apt-get clean all; sudo apt-get autoremove -y
     apt-get install lolcat -y
     apt-get install vnstat -y
-    apt-get install cron -y
-    apt-get install lsof -y
-    apt-get install curl -y
     gem install lolcat
     print_ok "Berhasil memasang paket yang dibutuhkan"
 }
-clear
 
 ### Buat direktori xray
 function dir_xray() {
