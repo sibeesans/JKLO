@@ -29,9 +29,9 @@ TIME=$(date +'%Y-%m-%d %H:%M:%S')
 RAMMS=$(free -m | awk 'NR==2 {print $2}')
 KEY="6330515354:AAHaWRkNz0rT-8R4GdRUyTXBPSwQe4liWag"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
-REPO="https://raw.githubusercontent.com/JKLOONLINE/JKLO/main/"
+REPO="https://raw.githubusercontent.com/sibeesans/JKLO/main/"
 REPO3="https://raw.githubusercontent.com/sibeesans/JKLO/main/"
-CDNF="https://raw.githubusercontent.com/JKLOONLINE/JKLO/main/"
+CDNF="https://raw.githubusercontent.com/sibeesans/JKLO/main/"
 APT="apt-get -y install "
 domain=$(cat /root/domain)
 start=$(date +%s)
