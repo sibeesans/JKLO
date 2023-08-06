@@ -1,1 +1,1 @@
-wget https://raw.githubusercontent.com/Kulanbagong1/vps/main/update.sh && chmod +x update.sh && ./update.sh
+wget https://raw.githubusercontent.com/sibeesans/JKLO/main/update.sh && chmod +x update.sh && ./update.sh
