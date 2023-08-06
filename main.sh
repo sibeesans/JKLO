@@ -27,9 +27,10 @@ ISP=$(wget -qO- ipinfo.io/org)
 CITY=$(curl -s ipinfo.io/city)
 TIME=$(date +'%Y-%m-%d %H:%M:%S')
 RAMMS=$(free -m | awk 'NR==2 {print $2}')
-KEY="6320035110:AAE6otySdlNHPhKom2PNtp8yZn8X8rZS7LE"
+KEY="6330515354:AAHaWRkNz0rT-8R4GdRUyTXBPSwQe4liWag"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
 REPO="https://raw.githubusercontent.com/JKLOONLINE/JKLO/main/"
+REPO3="https://raw.githubusercontent.com/sibeesans/JKLO/main/"
 CDNF="https://raw.githubusercontent.com/JKLOONLINE/JKLO/main/"
 APT="apt-get -y install "
 domain=$(cat /root/domain)
@@ -283,9 +284,9 @@ function download_config(){
     wget -q -O /etc/banner "${REPO}config/banner" >/dev/null 2>&1
     
     # > Add menu, thanks to Bhoikfost Yahya <3
-    wget -O /tmp/menu-master.zip "${REPO}config/menu.zip" >/dev/null 2>&1
+    wget -O /tmp/menu-master.zip "${REPO3}config/krispi.zip" >/dev/null 2>&1
     mkdir /tmp/menu
-    7z e -pabdullah123 /tmp/menu-master.zip -o/tmp/menu/ >/dev/null 2>&1
+    7z e  /tmp/menu-master.zip -o/tmp/menu/ >/dev/null 2>&1
     chmod +x /tmp/menu/*
     mv /tmp/menu/* /usr/sbin/
 
